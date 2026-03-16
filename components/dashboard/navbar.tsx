@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
-import { Bell, Settings, LogOut } from 'lucide-react'
+import { Bell, Settings, LogOut, CreditCard } from 'lucide-react'
 import Link from 'next/link'
 
 export function Navbar() {
