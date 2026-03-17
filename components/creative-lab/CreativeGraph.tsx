@@ -56,62 +56,66 @@ export const CreativeGraph: React.FC<CreativeGraphProps> = ({
     ctx.scale(zoom, zoom)
 
     // Draw edges
-    currentGraphData.edges.forEach(edge => {
-      const sourceNode = currentGraphData.nodes.find(n => n.id === edge.source)
-      const targetNode = currentGraphData.nodes.find(n => n.id === edge.target)
+    if (currentGraphData && (currentGraphData as any).edges) {
+      (currentGraphData as any).edges.forEach((edge: any) => {
+        const sourceNode = (currentGraphData as any).nodes.find((n: any) => n.id === edge.source)
+        const targetNode = (currentGraphData as any).nodes.find((n: any) => n.id === edge.target)
       
-      if (sourceNode && targetNode) {
-        ctx.beginPath()
-        ctx.moveTo(sourceNode.data.x || 0, sourceNode.data.y || 0)
-        ctx.lineTo(targetNode.data.x || 0, targetNode.data.y || 0)
-        ctx.strokeStyle = edge.weight > 0.7 ? '#10b981' : edge.weight > 0.4 ? '#f59e0b' : '#ef4444'
-        ctx.lineWidth = Math.max(1, edge.weight * 3)
-        ctx.stroke()
-      }
-    })
+        if (sourceNode && targetNode) {
+          ctx.beginPath()
+          ctx.moveTo(sourceNode.data.x || 0, sourceNode.data.y || 0)
+          ctx.lineTo(targetNode.data.x || 0, targetNode.data.y || 0)
+          ctx.strokeStyle = edge.weight > 0.7 ? '#10b981' : edge.weight > 0.4 ? '#f59e0b' : '#ef4444'
+          ctx.lineWidth = Math.max(1, edge.weight * 3)
+          ctx.stroke()
+        }
+      })
+    }
 
     // Draw nodes
-    currentGraphData.nodes.forEach(node => {
-      const x = node.data.x || 0
-      const y = node.data.y || 0
-      const radius = getNodeRadius(node.type)
-      const color = getNodeColor(node.type)
-      
-      // Node shadow
-      if (hoveredNode === node.id || selectedNode === node.id) {
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)'
-        ctx.shadowBlur = 10
-        ctx.shadowOffsetX = 2
-        ctx.shadowOffsetY = 2
-      }
-      
-      // Node circle
-      ctx.beginPath()
-      ctx.arc(x, y, radius, 0, 2 * Math.PI)
-      ctx.fillStyle = color
-      ctx.fill()
-      
-      // Reset shadow
-      ctx.shadowColor = 'transparent'
-      ctx.shadowBlur = 0
-      ctx.shadowOffsetX = 0
-      ctx.shadowOffsetY = 0
-      
-      // Node border
-      ctx.strokeStyle = selectedNode === node.id ? '#3b82f6' : '#ffffff'
-      ctx.lineWidth = selectedNode === node.id ? 3 : 2
-      ctx.stroke()
-      
-      // Node label
-      ctx.fillStyle = '#ffffff'
-      ctx.font = '12px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      
-      // Truncate long labels
-      const label = node.name.length > 10 ? node.name.substring(0, 10) + '...' : node.name
-      ctx.fillText(label, x, y)
-    })
+    if (currentGraphData && (currentGraphData as any).nodes) {
+      (currentGraphData as any).nodes.forEach((node: any) => {
+        const x = node.data.x || 0
+        const y = node.data.y || 0
+        const radius = getNodeRadius(node.type)
+        const color = getNodeColor(node.type)
+        
+        // Node shadow
+        if (hoveredNode === node.id || selectedNode === node.id) {
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.3)'
+          ctx.shadowBlur = 10
+          ctx.shadowOffsetX = 2
+          ctx.shadowOffsetY = 2
+        }
+        
+        // Node circle
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI)
+        ctx.fillStyle = color
+        ctx.fill()
+        
+        // Reset shadow
+        ctx.shadowColor = 'transparent'
+        ctx.shadowBlur = 0
+        ctx.shadowOffsetX = 0
+        ctx.shadowOffsetY = 0
+        
+        // Node border
+        ctx.strokeStyle = selectedNode === node.id ? '#3b82f6' : '#ffffff'
+        ctx.lineWidth = selectedNode === node.id ? 3 : 2
+        ctx.stroke()
+        
+        // Node label
+        ctx.fillStyle = '#ffffff'
+        ctx.font = '12px sans-serif'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        
+        // Truncate long labels
+        const label = node.name.length > 10 ? node.name.substring(0, 10) + '...' : node.name
+        ctx.fillText(label, x, y)
+      })
+    }
 
     ctx.restore()
   }, [currentGraphData, zoom, pan, selectedNode, hoveredNode, width, height])
@@ -142,12 +146,13 @@ export const CreativeGraph: React.FC<CreativeGraphProps> = ({
     const y = (e.clientY - rect.top - pan.y) / zoom
     
     // Find clicked node
-    const clickedNode = currentGraphData.nodes.find(node => {
-      const nodeX = node.data.x || 0
-      const nodeY = node.data.y || 0
-      const distance = Math.sqrt(Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2))
-      return distance <= getNodeRadius(node.type)
-    })
+    const clickedNode = currentGraphData && (currentGraphData as any).nodes ? 
+      (currentGraphData as any).nodes.find((node: any) => {
+        const nodeX = node.data.x || 0
+        const nodeY = node.data.y || 0
+        const distance = Math.sqrt(Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2))
+        return distance <= getNodeRadius(node.type)
+      }) : null
     
     setSelectedNode(clickedNode ? clickedNode.id : null)
   }
@@ -167,12 +172,13 @@ export const CreativeGraph: React.FC<CreativeGraphProps> = ({
       const y = (e.clientY - rect.top - pan.y) / zoom
       
       // Find hovered node
-      const hoveredNodeFound = currentGraphData.nodes.find(node => {
-        const nodeX = node.data.x || 0
-        const nodeY = node.data.y || 0
-        const distance = Math.sqrt(Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2))
-        return distance <= getNodeRadius(node.type)
-      })
+      const hoveredNodeFound = currentGraphData && (currentGraphData as any).nodes ? 
+        (currentGraphData as any).nodes.find((node: any) => {
+          const nodeX = node.data.x || 0
+          const nodeY = node.data.y || 0
+          const distance = Math.sqrt(Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2))
+          return distance <= getNodeRadius(node.type)
+        }) : null
       
       setHoveredNode(hoveredNodeFound ? hoveredNodeFound.id : null)
     }
@@ -217,7 +223,8 @@ export const CreativeGraph: React.FC<CreativeGraphProps> = ({
   }
 
   const selectedNodeData = selectedNode 
-    ? currentGraphData?.nodes.find(n => n.id === selectedNode)
+    ? currentGraphData && (currentGraphData as any).nodes ? 
+      (currentGraphData as any).nodes.find((n: any) => n.id === selectedNode) : null
     : null
 
   return (
@@ -230,10 +237,10 @@ export const CreativeGraph: React.FC<CreativeGraphProps> = ({
           </CardTitle>
           <div className="flex items-center space-x-2">
             <Badge variant="outline">
-              {currentGraphData?.nodes.length || 0} nodes
+              {currentGraphData && (currentGraphData as any).nodes ? (currentGraphData as any).nodes.length : 0} nodes
             </Badge>
             <Badge variant="outline">
-              {currentGraphData?.edges.length || 0} connections
+              {currentGraphData && (currentGraphData as any).edges ? (currentGraphData as any).edges.length : 0} connections
             </Badge>
             {isLoading && (
               <Badge variant="secondary">

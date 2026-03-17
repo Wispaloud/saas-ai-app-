@@ -112,7 +112,7 @@ export const CreativeList: React.FC<CreativeListProps> = ({
     })
   }
 
-  const displayCreatives = filteredCreatives.slice(0, maxItems)
+  const displayCreatives = filteredCreatives(useCreativeLabStore.getState()).slice(0, maxItems)
 
   return (
     <Card className="h-full">
@@ -127,10 +127,10 @@ export const CreativeList: React.FC<CreativeListProps> = ({
               {displayCreatives.length} shown
             </Badge>
             <Badge variant="outline">
-              {topPerformingCreatives.length} top
+              {topPerformingCreatives(useCreativeLabStore.getState()).length} top
             </Badge>
             <Badge variant="outline">
-              {fatiguedCreatives.length} fatigued
+              {fatiguedCreatives(useCreativeLabStore.getState()).length} fatigued
             </Badge>
           </div>
         </div>
@@ -155,11 +155,11 @@ export const CreativeList: React.FC<CreativeListProps> = ({
             </div>
 
             {/* Tag Filters */}
-            {availableTags.length > 0 && (
+            {availableTags(useCreativeLabStore.getState()).length > 0 && (
               <div className="space-y-2">
                 <span className="text-sm text-gray-600">Tags:</span>
                 <div className="flex flex-wrap gap-1">
-                  {availableTags.slice(0, 10).map(tag => (
+                  {availableTags(useCreativeLabStore.getState()).slice(0, 10).map(tag => (
                     <Button
                       key={tag}
                       variant={filters.tags.includes(tag) ? 'default' : 'outline'}
@@ -176,11 +176,11 @@ export const CreativeList: React.FC<CreativeListProps> = ({
             )}
 
             {/* Cluster Filters */}
-            {availableClusters.length > 0 && (
+            {availableClusters(useCreativeLabStore.getState()).length > 0 && (
               <div className="space-y-2">
                 <span className="text-sm text-gray-600">Clusters:</span>
                 <div className="flex flex-wrap gap-1">
-                  {availableClusters.slice(0, 5).map(cluster => (
+                  {availableClusters(useCreativeLabStore.getState()).slice(0, 5).map(cluster => (
                     <Button
                       key={cluster}
                       variant={filters.clusters.includes(cluster) ? 'default' : 'outline'}
@@ -199,7 +199,7 @@ export const CreativeList: React.FC<CreativeListProps> = ({
             <div className="space-y-2">
               <span className="text-sm text-gray-600">Platforms:</span>
               <div className="flex flex-wrap gap-1">
-                {availablePlatforms.map(platform => (
+                {availablePlatforms(useCreativeLabStore.getState()).map(platform => (
                   <Button
                     key={platform}
                     variant={filters.platforms.includes(platform) ? 'default' : 'outline'}

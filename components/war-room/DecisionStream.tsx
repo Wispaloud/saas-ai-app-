@@ -224,8 +224,10 @@ const DecisionCard: React.FC<DecisionCardProps> = ({
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2 mb-1">
                 <Badge className={getStatusColor(decision.status)}>
-                  <getStatusIcon(decision.status) className="h-3 w-3 mr-1" />
-                  {decision.status}
+                  <span className="flex items-center">
+                    {getStatusIcon(decision.status)}
+                    <span className="ml-1">{decision.status}</span>
+                  </span>
                 </Badge>
                 <span className="text-xs text-gray-500">
                   {getTimeAgo(decision.created_at)}

@@ -47,7 +47,7 @@ export const useCreativeLabStore = create<CreativeLabStore>()(
 
     setClusters: (clusters) => set({ clusters }),
 
-    setGraphData: (graphData) => set({ graph_data }),
+    setGraphData: (graph_data) => set({ graph_data }),
 
     updateCreative: (updatedCreative) => set((state) => ({
       creatives: state.creatives.map(creative =>

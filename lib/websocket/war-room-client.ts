@@ -1,3 +1,4 @@
+import React from 'react'
 import { useWarRoomStore } from '@/lib/stores/war-room-store'
 import { WebSocketEvent } from '@/types/aie'
 

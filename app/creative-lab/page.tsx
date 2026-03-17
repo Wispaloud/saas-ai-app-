@@ -7,7 +7,7 @@ import { CreativeList } from '@/components/creative-lab/CreativeList'
 import { CreativeGraph } from '@/components/creative-lab/CreativeGraph'
 import { CreativeDetail } from '@/components/creative-lab/CreativeDetail'
 import { BriefGenerator } from '@/components/creative-lab/BriefGenerator'
-import { useCreativeLabStore } from '@/lib/stores/creative-lab-store'
+import { useCreativeLabStore, useCreativeLabSelectors } from '@/lib/stores/creative-lab-store'
 import { useCreativeLabCreatives, useCreativeLabClusters } from '@/lib/hooks/use-aie-api'
 import { 
   Zap, 
@@ -17,7 +17,8 @@ import {
   TrendingUp,
   BarChart3,
   Activity,
-  Filter
+  Filter,
+  Target
 } from 'lucide-react'
 
 // Create a client for this page
@@ -38,17 +39,17 @@ export default function CreativeLabPage() {
   // Update store with fetched data
   React.useEffect(() => {
     if (creatives) {
-      useCreativeLabStore.getState().setCreatives(creatives)
+      useCreativeLabStore.getState().setCreatives(creatives as any)
     }
   }, [creatives])
 
   React.useEffect(() => {
     if (clusters) {
-      useCreativeLabStore.getState().setClusters(clusters)
+      useCreativeLabStore.getState().setClusters(clusters as any)
     }
   }, [clusters])
 
-  const performanceStats = useCreativeLabStore.getState().performanceStats
+  const performanceStats = useCreativeLabSelectors.performanceStats(useCreativeLabStore.getState())
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -145,9 +146,9 @@ export default function CreativeLabPage() {
                       <Activity className="h-8 w-8 animate-spin mx-auto mb-2" />
                       <p className="text-sm text-gray-600">Loading clusters...</p>
                     </div>
-                  ) : clusters && clusters.length > 0 ? (
+                  ) : clusters && (clusters as any).length > 0 ? (
                     <div className="space-y-3">
-                      {clusters.slice(0, 5).map((cluster, index) => (
+                      {(clusters as any).slice(0, 5).map((cluster: any, index: number) => (
                         <div key={cluster.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                           <div className="flex items-center space-x-3">
                             <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-sm font-medium text-purple-600">
@@ -206,11 +207,11 @@ export default function CreativeLabPage() {
           <div className="mt-8 text-center text-xs text-gray-500">
             <div className="flex items-center justify-center space-x-4">
               <span>
-                {creatives?.length || 0} creatives loaded
+                {(creatives as any)?.length || 0} creatives loaded
               </span>
               <span>•</span>
               <span>
-                {clusters?.length || 0} clusters analyzed
+                {(clusters as any)?.length || 0} clusters analyzed
               </span>
               <span>•</span>
               <span>

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { DecisionActionRequest, SystemConfigRequest, CreativeBriefRequest, CreativeActionRequest } from '@/types/aie'
 
@@ -131,7 +132,7 @@ export const useSystemConfig = () => {
 export const useCreativeLabCreatives = (filters?: any) => {
   return useQuery({
     queryKey: ['creative-lab', 'creatives', filters],
-    queryFn: () => apiClient.get('/creatives', filters),
+    queryFn: () => filters ? apiClient.get(`/creatives?${new URLSearchParams(filters).toString()}`) : apiClient.get('/creatives'),
     staleTime: 30000
   })
 }

@@ -256,8 +256,8 @@ export const CreativeDetail: React.FC<CreativeDetailProps> = ({
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Impressions</span>
                   <span className="font-medium">
-                    {creative.performance.spend > 0 
-                      ? Math.round(creative.performance.spend / (creative.performance.ctr * creative.performance.cpc))
+                    {creative.performance.spend > 0 && creative.performance.ctr > 0
+                      ? Math.round(creative.performance.spend / (creative.performance.ctr * (creative.performance.spend / (creative.performance.conversions || 1))))
                       : 0
                     }.toLocaleString()
                   </span>
@@ -266,7 +266,10 @@ export const CreativeDetail: React.FC<CreativeDetailProps> = ({
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Clicks</span>
                   <span className="font-medium">
-                    {Math.round(creative.performance.spend / creative.performance.cpc).toLocaleString()}
+                    {creative.performance.ctr > 0 && creative.performance.spend > 0
+                      ? Math.round(creative.performance.spend * creative.performance.ctr / 100).toLocaleString()
+                      : 0
+                    }
                   </span>
                 </div>
                 
@@ -282,7 +285,12 @@ export const CreativeDetail: React.FC<CreativeDetailProps> = ({
                 
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">CPC</span>
-                  <span className="font-medium">${creative.performance.cpc.toFixed(2)}</span>
+                  <span className="font-medium">
+                    ${creative.performance.ctr > 0 && creative.performance.spend > 0
+                      ? (creative.performance.spend / (creative.performance.spend * creative.performance.ctr / 100)).toFixed(2)
+                      : '0.00'
+                    }
+                  </span>
                 </div>
                 
                 <div className="flex justify-between items-center">
@@ -372,21 +380,21 @@ export const CreativeDetail: React.FC<CreativeDetailProps> = ({
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-600">
-                    {performanceData.trend?.roas_change > 0 ? '+' : ''}{performanceData.trend?.roas_change || 0}%
+                    {(performanceData as any)?.trend?.roas_change > 0 ? '+' : ''}{(performanceData as any)?.trend?.roas_change || 0}%
                   </div>
                   <div className="text-sm text-gray-600">ROAS Change</div>
                 </div>
                 
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600">
-                    {performanceData.trend?.ctr_change > 0 ? '+' : ''}{performanceData.trend?.ctr_change || 0}%
+                    {(performanceData as any)?.trend?.ctr_change > 0 ? '+' : ''}{(performanceData as any)?.trend?.ctr_change || 0}%
                   </div>
                   <div className="text-sm text-gray-600">CTR Change</div>
                 </div>
                 
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-600">
-                    {performanceData.trend?.spend_change > 0 ? '+' : ''}{performanceData.trend?.spend_change || 0}%
+                    {(performanceData as any)?.trend?.spend_change > 0 ? '+' : ''}{(performanceData as any)?.trend?.spend_change || 0}%
                   </div>
                   <div className="text-sm text-gray-600">Spend Change</div>
                 </div>

@@ -67,8 +67,8 @@ export const BriefGenerator: React.FC<BriefGeneratorProps> = ({ maxBriefs = 10 }
         variations_count: variationsCount
       })
       
-      if (result.briefs) {
-        result.briefs.forEach((brief: CreativeBrief) => {
+      if ((result as any).briefs) {
+        (result as any).briefs.forEach((brief: CreativeBrief) => {
           addBrief(brief)
         })
       }
