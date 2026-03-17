@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe/webhook'
+import { getStripeClient } from '@/lib/stripe/webhook'
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
     if (subscription?.stripe_customer_id) {
       customerId = subscription.stripe_customer_id
     } else {
+      const stripe = getStripeClient()
       const customer = await stripe.customers.create({
         email: user.email!,
         metadata: {
@@ -71,6 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create checkout session
+    const stripe = getStripeClient()
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       payment_method_types: ['card'],
