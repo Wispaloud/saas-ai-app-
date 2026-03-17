@@ -13,7 +13,7 @@ import {
   User,
   Target,
   FlaskConical,
-  Campaign,
+  Megaphone,
   FolderOpen,
   TestTube
 } from 'lucide-react'
@@ -25,7 +25,7 @@ const navigation = [
   { name: 'AI Generator', href: '/dashboard/generator', icon: Zap },
   { name: 'War Rooms', href: '/dashboard/war-rooms', icon: Target },
   { name: 'Creative Labs', href: '/dashboard/creative-labs', icon: FlaskConical },
-  { name: 'Campaigns', href: '/dashboard/campaigns', icon: Campaign },
+  { name: 'Campaigns', href: '/dashboard/campaigns', icon: Megaphone },
   { name: 'Asset Library', href: '/dashboard/assets', icon: FolderOpen },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
