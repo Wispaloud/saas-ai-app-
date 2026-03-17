@@ -62,7 +62,6 @@ export async function POST(request: NextRequest) {
       platform as any || 'facebook',
       prompt,
       {
-        platform: platform || 'facebook',
         // Add more options as needed
       }
     )
