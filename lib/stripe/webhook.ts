@@ -21,6 +21,7 @@ function getStripeClient() {
 }
 
 export { getStripeClient as stripe }
+export { getStripeClient }
 
 export async function getStripeEvent(body: string, signature: string) {
   const client = getStripeClient()
