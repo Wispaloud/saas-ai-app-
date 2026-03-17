@@ -10,7 +10,12 @@ import {
   Settings, 
   CreditCard,
   LogOut,
-  User
+  User,
+  Target,
+  FlaskConical,
+  Campaign,
+  FolderOpen,
+  TestTube
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
@@ -18,6 +23,10 @@ import { useState, useEffect } from 'react'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'AI Generator', href: '/dashboard/generator', icon: Zap },
+  { name: 'War Rooms', href: '/dashboard/war-rooms', icon: Target },
+  { name: 'Creative Labs', href: '/dashboard/creative-labs', icon: FlaskConical },
+  { name: 'Campaigns', href: '/dashboard/campaigns', icon: Campaign },
+  { name: 'Asset Library', href: '/dashboard/assets', icon: FolderOpen },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },

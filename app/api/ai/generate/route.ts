@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
-import { generateMarketingContent } from '@/lib/ai/openai'
+import { generatePlatformSpecificAd } from '@/lib/ai/adgen'
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,14 +58,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate content
-    const platformPrompt = platform && platform !== 'general' 
-      ? `Generate this content specifically for ${platform}: ${prompt}`
-      : prompt
-
-    const result = await generateMarketingContent(platformPrompt)
+    const result = await generatePlatformSpecificAd(
+      platform as any || 'facebook',
+      prompt,
+      {
+        platform: platform || 'facebook',
+        // Add more options as needed
+      }
+    )
 
     // Estimate tokens (rough calculation)
-    const tokensUsed = Math.ceil((prompt.length + result.length) / 4)
+    const tokensUsed = Math.ceil((prompt.length + JSON.stringify(result).length) / 4)
 
     return NextResponse.json({
       result,

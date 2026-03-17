@@ -12,25 +12,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Zap, Copy, Check } from 'lucide-react'
 
 const platforms = [
-  { value: 'general', label: 'General' },
-  { value: 'facebook', label: 'Facebook' },
-  { value: 'instagram', label: 'Instagram' },
-  { value: 'google', label: 'Google Ads' },
-  { value: 'linkedin', label: 'LinkedIn' },
-  { value: 'twitter', label: 'Twitter' },
+  { value: 'facebook', label: 'Facebook', icon: '📘' },
+  { value: 'instagram', label: 'Instagram', icon: '📷' },
+  { value: 'google', label: 'Google Ads', icon: '🔍' },
+  { value: 'tiktok', label: 'TikTok', icon: '🎵' },
+  { value: 'linkedin', label: 'LinkedIn', icon: '💼' },
+  { value: 'twitter', label: 'Twitter', icon: '🐦' },
 ]
 
 const presetPrompts = [
   "Generate a compelling Facebook ad for a new coffee shop opening downtown",
   "Create an Instagram caption for a fitness app launch",
   "Write a Google Ads headline for a SaaS productivity tool",
-  "Develop LinkedIn ad copy for a B2B consulting service",
-  "Craft a Twitter announcement for a product update",
+  "Develop TikTok ad copy for a fashion brand targeting Gen Z",
+  "Craft LinkedIn ad copy for a B2B consulting service",
+  "Create Twitter announcement for a product update",
 ]
 
 export default function GeneratorPage() {
   const [prompt, setPrompt] = useState('')
-  const [platform, setPlatform] = useState('general')
+  const [platform, setPlatform] = useState('facebook')
   const [result, setResult] = useState('')
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
