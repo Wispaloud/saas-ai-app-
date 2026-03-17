@@ -1,13 +1,25 @@
 import OpenAI from 'openai'
 
+let openaiClient: OpenAI | null = null
+
 function getOpenAIClient() {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error('OpenAI API key is not configured')
+  // Only create client if it doesn't exist and we're in a server environment
+  if (!openaiClient && typeof window === 'undefined') {
+    const apiKey = process.env.OPENAI_API_KEY
+    if (!apiKey) {
+      throw new Error('OpenAI API key is not configured')
+    }
+    
+    openaiClient = new OpenAI({
+      apiKey,
+    })
   }
   
-  return new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  })
+  if (!openaiClient) {
+    throw new Error('OpenAI client can only be initialized server-side')
+  }
+  
+  return openaiClient
 }
 
 // Platform-specific ad generation prompts
