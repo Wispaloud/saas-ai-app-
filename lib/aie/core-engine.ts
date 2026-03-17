@@ -383,7 +383,8 @@ export class AgencyIntelligenceEngine {
         'PAUSE_AD': 1,
         'REDUCE_BUDGET': 2,
         'SCALE_CAMPAIGN': 3,
-        'LAUNCH_CREATIVE': 4
+        'INCREASE_BUDGET': 4,
+        'LAUNCH_CREATIVE': 5
       }
       return priority[a.action] - priority[b.action] || (b.confidence - a.confidence)
     })
@@ -425,6 +426,19 @@ export class AgencyIntelligenceEngine {
             parameters: {
               campaign_id: decision.target.id,
               increase_percentage: 0.3,
+              reason: decision.reason
+            }
+          })
+          break
+
+        case 'INCREASE_BUDGET':
+          plan.push({
+            step: stepNumber++,
+            action: 'increase_budget',
+            platform: entity.platform,
+            parameters: {
+              campaign_id: decision.target.id,
+              increase_percentage: 0.2,
               reason: decision.reason
             }
           })
