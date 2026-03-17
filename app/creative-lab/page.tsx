@@ -21,6 +21,9 @@ import {
   Target
 } from 'lucide-react'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 // Create a client for this page
 const queryClient = new QueryClient({
   defaultOptions: {

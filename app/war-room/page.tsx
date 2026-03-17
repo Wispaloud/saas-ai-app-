@@ -9,6 +9,9 @@ import { ExecutionPanel } from '@/components/war-room/ExecutionPanel'
 import { useWarRoomWebSocket } from '@/lib/websocket/war-room-client'
 import { useWarRoomStore } from '@/lib/stores/war-room-store'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 // Create a client for this page
 const queryClient = new QueryClient({
   defaultOptions: {
