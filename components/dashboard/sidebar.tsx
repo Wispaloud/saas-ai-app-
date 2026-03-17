@@ -15,7 +15,8 @@ import {
   FlaskConical,
   Megaphone,
   FolderOpen,
-  TestTube
+  TestTube,
+  Brain
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
@@ -27,6 +28,7 @@ const navigation = [
   { name: 'Creative Labs', href: '/dashboard/creative-labs', icon: FlaskConical },
   { name: 'Campaigns', href: '/dashboard/campaigns', icon: Megaphone },
   { name: 'Asset Library', href: '/dashboard/assets', icon: FolderOpen },
+  { name: 'AIE Engine', href: '/dashboard/aie', icon: Brain },
   { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
